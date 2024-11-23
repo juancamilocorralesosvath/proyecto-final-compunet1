@@ -1,0 +1,81 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+.container {
+    display: flex;
+    height: 100%;
+}
+.left {
+    background-color: #2c2c2c;
+    color: white;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+.left .logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 50px;
+}
+.left .logo i {
+    font-size: 2em;
+    color: #6ab4ba;
+    margin-right: 10px;
+}
+.left .logo h1 {
+    font-size: 2em;
+    margin: 0;
+}
+.left h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+.left form {
+    width: fit-content; 
+    max-width: 300px;
+}
+.left form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #444;
+    border-radius: 5px;
+    background-color: #333;
+    color: white;
+    box-sizing: border-box;
+}
+.left form button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #4ab3f4;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+}
+.left form a {
+    color: #4ab3f4;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+.left .register {
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+.left .register a {
+    color: #4ab3f4;
+    text-decoration: none;
+}
+.right {
+    width: 50%;
+    background: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img3.webp') no-repeat center center;
+    background-size: cover;
+}
