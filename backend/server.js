@@ -10,6 +10,8 @@ const bcrypt = require('bcrypt')
 // para poder leer y escribir archivos JSON
 const fs = require('fs')
 const jwt = require('jsonwebtoken')
+const path = require('path');
+
 
 const usersFilePath = './users.json'
 const productsFilePath = './products.json'
@@ -19,6 +21,14 @@ app.use(express.json())
 /* const users = [{
     name:'john doe'
 }] */
+
+// Serve static files (CSS, JS, images) from the 'Frontend' directory
+app.use(express.static(path.join(__dirname, '../Frontend')));
+
+// Route to serve the home page (HTML file)
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../Frontend/dashboard.html'));
+});
 
 const readUsersFromFile = () => {
     if(!fs.existsSync(usersFilePath)) {
@@ -127,9 +137,6 @@ app.post('/users/login', async (req, res) => {
         res.status(500).send('Error during login');
     }
 });
-
-// Servir archivos estáticos desde la carpeta 'Frontend'
-app.use(express.static(path.join(__dirname, '../Frontend')));
 
 // Endpoint to add a product - only accessible by admins 
 app.post('/products', checkToken, (req, res) => { 
