@@ -6,8 +6,9 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "name": "kyle",
-    "password": "password"
+    "name": "john doe",
+    "password": "password",
+    "role": "admin"
 }
 
 ###
@@ -16,6 +17,16 @@ POST http://localhost:3000/users/login
 Content-Type: application/json
 
 {
-    "name": "kyle",
+    "name": "john doe",
     "password": "password"
+}
+
+### add a product
+POST http://localhost:3000/products
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Im5hbWUiOiJqb2huIGRvZSIsInBhc3N3b3JkIjoiJDJiJDEwJEJOS3VlM0Y3WlA1ZlZ2ai8vdW5XQXVsMndPYi9qWmF2YmdVQnUxTTRCaWozUnFQT0VWc3BxIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczMTU5MjYwMSwiZXhwIjoxNzMxNTk2MjAxfQ.T1w3JWf9_QOF68c5rAdXeqrZweNVXv63nOR-D4ayqjw
+
+{
+    "name": "product1",
+    "price": 100
 }
