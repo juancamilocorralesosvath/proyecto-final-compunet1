@@ -71,6 +71,7 @@ const checkToken = (req, res, next) => {
     }
 }
 
+// Ruta para obtener todos los usuarios
 app.get('/users', (req, res) => {
     const users = readUsersFromFile()
     res.json(users)
@@ -98,8 +99,9 @@ app.post('/users', async (req, res) => {
     }catch{
         res.status(500).send()
     }
-})
+});
 
+// Ruta de login de usuario
 app.post('/users/login', async (req, res) => {
     const users = readUsersFromFile()
     const user = users.find(user => user.name === req.body.name)
@@ -122,9 +124,12 @@ app.post('/users/login', async (req, res) => {
             res.send('wrong username or password...')
         }
     } catch (error) {
-        res.status(500).send(error)
+        res.status(500).send('Error during login');
     }
-})
+});
+
+// Servir archivos estáticos desde la carpeta 'Frontend'
+app.use(express.static(path.join(__dirname, '../Frontend')));
 
 // Endpoint to add a product - only accessible by admins 
 app.post('/products', checkToken, (req, res) => { 
