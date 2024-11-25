@@ -1,63 +1,84 @@
-const express = require('express')
-const app = express()
-// para encriptar las contraseñas de los usuarios, de esa manera aunque
-// alguien logre acceder a nuestra base de datos, no va a poder ver las contraseñas
-// es una libreria asincrona
-const bcrypt = require('bcrypt')
+const express = require('express');
+const app = express();
+const path = require('path');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-app.use(express.json())
+app.use(express.json());
 
+// Simulando una base de datos
 const users = [{
-    name:'john doe'
-}]
+    name: 'john doe',
+    password: '$2b$10$4KOYUsQcfghyN1hnHjL13.Yt1XlAoWiMvs6ZTtL2dx8w5gPlXGlvC', // password hasheada de ejemplo
+}];
 
+// Ruta para obtener todos los usuarios
 app.get('/users', (req, res) => {
-    res.json(users)
-})
+    res.json(users);
+});
 
-app.post('/users', async (req, res) => {
-    try{
-        // entre mas grande el numero del salt mas tiempo va a tomar, pero es mas seguro
-        const salt = await bcrypt.genSalt()
-        // para hacer el hash, toma la contra del user y el salt que generamos
-        const hashedPassword = await bcrypt.hash(req.body.password, salt)
-        console.log("salt:"+salt)
-        console.log("hash:"+hashedPassword)
+// Ruta de registro de usuario
+app.post('/users/register', async (req, res) => {
+    const { name, password } = req.body;
 
-        const user = {
-            name: req.body.name,
-            // bcrypt se encarga de guardar el salt dentro del hash
-            password: hashedPassword
-        }
-        users.push(user)
-        res.status(201).send()
-    }catch{
-        res.status(500).send()
-    }
-})
-
-app.post('/users/login', async (req, res) => {
-    const user = users.find(user => user.name === req.body.name)
-    if (user == null){
-        return res.status(400).send('user does not exists')
+    // Verificar si el usuario ya existe
+    const existingUser = users.find(user => user.name === name);
+    if (existingUser) {
+        return res.status(400).send('User already exists');
     }
 
     try {
-        // usamos bcrypt para comparar
-        if (await bcrypt.compare(req.body.password, user.password)){
-            res.send('success!!!')
-        } else{
-            res.send('wrong username or password...')
-        }
-    } catch (error) {
-        res.status(500).send(error)
-    }
-})
+        // Generar salt y hash de la contraseña
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
 
-// Ruta para servir el archivo HTML (index.html)
-app.get('/', (req, res) => {
-    // Enviar el archivo index.html al cliente cuando acceda a la raíz
-    res.sendFile(__dirname + '/Frontend/index.html');  // Asegúrate de que el archivo esté en la misma carpeta que server.js
+        // Crear el nuevo usuario
+        const user = {
+            name,
+            password: hashedPassword,
+        };
+
+        // Guardar el usuario en la "base de datos"
+        users.push(user);
+        res.status(201).send('User registered successfully');
+    } catch (error) {
+        res.status(500).send('Error registering user');
+    }
 });
 
-app.listen(3000)
+// Ruta de login de usuario
+app.post('/users/login', async (req, res) => {
+    const { name, password } = req.body;
+
+    // Buscar al usuario en la "base de datos"
+    const user = users.find(user => user.name === name);
+    if (!user) {
+        return res.status(400).send('User does not exist');
+    }
+
+    try {
+        // Verificar la contraseña
+        if (await bcrypt.compare(password, user.password)) {
+            // Generar un token JWT
+            const token = jwt.sign({ name: user.name }, 'your_jwt_secret', { expiresIn: '1h' });
+            res.status(200).json({ message: 'Login successful', token });
+        } else {
+            res.status(400).send('Wrong username or password');
+        }
+    } catch (error) {
+        res.status(500).send('Error during login');
+    }
+});
+
+// Servir archivos estáticos desde la carpeta 'Frontend'
+app.use(express.static(path.join(__dirname, '../Frontend')));
+
+// Ruta para servir el archivo index.html
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../Frontend/LogIn.html'));
+});
+
+// Puerto donde corre el servidor
+app.listen(3000, () => {
+    console.log('Server running on http://localhost:3000');
+});

@@ -4,12 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register</title>
-    <link href="static/Register.css" rel="stylesheet" />
+    <link href="css/Register.css" rel="stylesheet" />
   </head>
   <body>
     <main>
         <h1>Sign Up</h1>
-        <form action="register" method="post">
+        <form id="registerForm">
             <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="Enter username" required />
             <label for="password">Password</label>
@@ -19,6 +19,40 @@
             <button type="submit">Sign Up</button>
             <p>Already have an account? <a href="LogIn.html">Log in</a></p>
         </form>
+
+        <script>
+          document.getElementById('registerForm').addEventListener('submit', async (event) => {
+            event.preventDefault();  // Prevenir el comportamiento por defecto
+
+            const name = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Validación básica
+            if (!name || !password || !confirmPassword) {
+              alert("Please fill all fields!");
+              return;
+            }
+
+            if (password !== confirmPassword) {
+              alert("Passwords do not match!");
+              return;
+            }
+
+            const response = await fetch('/users/register', {  
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ name, password })
+            });
+
+            if (response.ok) {
+              alert("Registration successful!");
+              window.location.href = "LogIn.html";
+            } else {
+              alert("Registration failed!");
+            }
+          });
+        </script>
     </main>
   </body>
 </html>
