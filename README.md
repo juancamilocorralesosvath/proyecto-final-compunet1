@@ -25,7 +25,8 @@ to install the required dependencies
 
 4. head to the url in localhost, port 3000: http://localhost:3000
 
-keep in mind:
+keep in mind:  
+
 5. there is only one admin user: 
 * email: admin@myapp.com
 * password: admin
