@@ -15,44 +15,59 @@
         </div>
         <h1>Log in</h1>
         <form id="loginForm">
-          <input type="text" id="username" placeholder="Username" />
+          <input type="text" id="name" placeholder="Username" />
           <input type="password" id="password" placeholder="Password" />
           <button type="submit" id="loginButton">LOGIN</button>
           <a href="forgot-password.html">Forgot password?</a>
         </form>
 
+        <p id="message"></p>
+
         <script>
           document.getElementById('loginForm').addEventListener('submit', async (event) => {
-            event.preventDefault();  // Evitar que el formulario se envíe por defecto
+          event.preventDefault(); // Prevent the default form submission
 
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+          const name = document.getElementById('name').value;
+          const password = document.getElementById('password').value;
 
-            // Validación básica
-            if (!username || !password) {
-              alert("Please fill in all fields.");
-              return;
-            }
+          try {
+              const response = await fetch('/users/login', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ name, password }),
+              });
 
-            console.log(username);
+              const messageElement = document.getElementById('message');
 
-            const response = await fetch('/users/login', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ name: username, password: password })
-            });
+              if (response.status === 201) {
+                  const token = await response.text(); // Get the token from the response
+                  messageElement.textContent = 'Login successful!';
+                  messageElement.style.color = 'green';
 
-            if (response.ok) {
-              const { token } = await response.json();
-              // Almacenar el token en localStorage
-               localStorage.setItem('token', token);
-              alert("Login successful!");
-              window.location.href = "dashboard.html"; 
-            } else {
-              alert("Invalid username or password!");
-            }
-          });
-        </script>
+                  // Store the token in localStorage for later use
+                  localStorage.setItem('authToken', token);
+
+                  // Redirect to dashboard or another page
+                  setTimeout(() => {
+                      window.location.href = 'dashboard.html'; // Change to your desired page
+                  }, 2000); // Wait 2 seconds before redirecting
+              } else if (response.status === 400) {
+                  const errorMessage = await response.text();
+                  messageElement.textContent = errorMessage;
+                  messageElement.style.color = 'red';
+              } else {
+                  messageElement.textContent = 'Login failed. Please check your credentials.';
+                  messageElement.style.color = 'red';
+              }
+          } catch (error) {
+              console.error('Error:', error);
+              document.getElementById('message').textContent = 'An error occurred. Please try again.';
+              document.getElementById('message').style.color = 'red';
+          }
+      });
+      </script>
 
         <div class="register">
           Don't have an account? <a href="Register.html">Register here</a>

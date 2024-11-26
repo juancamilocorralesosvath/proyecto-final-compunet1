@@ -11,47 +11,60 @@
         <h1>Sign Up</h1>
         <form id="registerForm">
             <label for="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="Enter username" required />
+            <input type="text" id="name" name="username" placeholder="Enter username" required />
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Enter password" required />
-            <label for="confirmPassword">Confirm Password</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Enter password again" required />
+            <label for="role">Role</label>
+            <select id="role" name="role">
+                <option value="admin">Admin</option>
+                <option value="user">User</option>
+            </select>
             <button type="submit">Sign Up</button>
             <p>Already have an account? <a href="LogIn.html">Log in</a></p>
         </form>
 
+        <p id="message"></p>
+
         <script>
           document.getElementById('registerForm').addEventListener('submit', async (event) => {
-            event.preventDefault();  // Prevenir el comportamiento por defecto
+          event.preventDefault();
 
-            const name = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            
-            // Validación básica
-            if (!name || !password || !confirmPassword) {
-              alert("Please fill all fields!");
-              return;
-            }
+          const name = document.getElementById('name').value;
+          const password = document.getElementById('password').value;
+          const role = document.getElementById('role').value;
 
-            if (password !== confirmPassword) {
-              alert("Passwords do not match!");
-              return;
-            }
-
-            const response = await fetch('/users/register', {  
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ name, password })
-            });
-
-            if (response.ok) {
-              alert("Registration successful!");
-              window.location.href = "LogIn.html";
-            } else {
-              alert("Registration failed!");
-            }
+          try {
+          const response = await fetch('/users/register', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name, password, role }),
           });
+
+          const messageElement = document.getElementById('message');
+
+          if (response.status === 201) {
+          messageElement.textContent = 'User registered successfully!';
+          messageElement.style.color = 'green';
+          setTimeout(() => {
+              window.location.href = 'LogIn.html'; // Redirect to login page
+          }, 2000);
+          } else if (response.status === 400) {
+          const errorMessage = await response.text();
+          messageElement.textContent = errorMessage;
+          messageElement.style.color = 'red';
+          } else {
+          messageElement.textContent = 'An error occurred. Please try again.';
+          messageElement.style.color = 'red';
+          }
+          } catch (error) {
+          console.error('Error:', error);
+          document.getElementById('message').textContent = 'An error occurred. Please try again.';
+          }
+          });
+
+
         </script>
     </main>
   </body>
