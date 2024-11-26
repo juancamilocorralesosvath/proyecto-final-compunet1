@@ -18,10 +18,9 @@ const usersFilePath = './users.json'
 const productsFilePath = './products.json'
 
 app.use(express.json())
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, '../Frontend'))
 
-/* const users = [{
-    name:'john doe'
-}] */
 
 // Serve static files (CSS, JS, images) from the 'Frontend' directory
 app.use(express.static(path.join(__dirname, '../Frontend')));
@@ -39,9 +38,16 @@ function isAuthenticated(req, res, next) {
     }
 }
 
-// Route to serve the home page (HTML file)
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../Frontend/dashboard.html'));
+    // Read the products data
+    fs.readFile(path.join(__dirname, 'products.json'), 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).send('Error reading product data');
+        }
+        const products = JSON.parse(data);
+        // Render the dashboard page and pass the products data
+        res.render('dashboard', { products: products });
+    });
 });
 
 const readUsersFromFile = () => {
