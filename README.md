@@ -21,7 +21,8 @@ cd backend
 ```bash
 npm run install
 ```
-to install the required dependencies
+to install the required dependencies  
+
 4. head to the url in localhost, port 3000: http://localhost:3000
 
 keep in mind:
