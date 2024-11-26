@@ -108,5 +108,87 @@
     ],
     "total": 2670000,
     "date": "2024-11-26T11:51:49.594Z"
+  },
+  {
+    "userId": 5,
+    "id": 8,
+    "items": [
+      {
+        "itemId": "1",
+        "name": "Camiseta mujer",
+        "price": "50000",
+        "quantity": "1"
+      },
+      {
+        "itemId": "2",
+        "name": "Fancy product",
+        "price": "200000",
+        "quantity": "1"
+      },
+      {
+        "itemId": "3",
+        "name": "Gorra Bitcoins",
+        "price": "20000",
+        "quantity": "1"
+      }
+    ],
+    "total": 270000,
+    "date": "2024-11-26T12:11:41.114Z"
+  },
+  {
+    "userId": 5,
+    "id": 9,
+    "items": [
+      {
+        "itemId": "5",
+        "name": "The Bitcoin Standard",
+        "price": "100",
+        "quantity": "1"
+      }
+    ],
+    "total": 100,
+    "date": "2024-11-26T12:14:49.870Z"
+  },
+  {
+    "userId": 5,
+    "id": 10,
+    "items": [
+      {
+        "itemId": "5",
+        "name": "The Bitcoin Standard",
+        "price": "100",
+        "quantity": "1"
+      }
+    ],
+    "total": 100,
+    "date": "2024-11-26T12:16:21.561Z"
+  },
+  {
+    "userId": 5,
+    "id": 11,
+    "items": [
+      {
+        "itemId": "4",
+        "name": "lapiz",
+        "price": "2000",
+        "quantity": "1000"
+      }
+    ],
+    "total": 2000000,
+    "date": "2024-11-26T12:16:57.627Z"
+  },
+  {
+    "userId": 5,
+    "id": 12,
+    "items": [
+      {
+        "itemId": "4",
+        "name": "lapiz",
+        "price": "2000",
+        "quantity": "200"
+      }
+    ],
+    "total": 400000,
+    "date": "2024-11-26T12:17:28.241Z"
   }
 ]

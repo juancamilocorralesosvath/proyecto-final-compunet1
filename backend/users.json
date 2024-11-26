@@ -22,5 +22,11 @@
     "name": "camilo",
     "email": "camilo@gmail.com",
     "password": "$2b$10$7GYiHJmxN3LzlgQbWQsUvOHc4PMHkWeHnuVzIba2sHQU/ZgdnGvK2"
+  },
+  {
+    "id": 5,
+    "name": "juan",
+    "email": "juan@gmail.com",
+    "password": "$2b$10$16DqXQmGz5.3ANFsgBWp7OZlkW3TxOz4FBb4q61Wo7kGISwGWrxvW"
   }
 ]

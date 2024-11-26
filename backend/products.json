@@ -30,5 +30,13 @@
     "price": 2000,
     "stock": 1000,
     "imageUrl": "/uploads/1732621816755.jpg"
+  },
+  {
+    "id": 5,
+    "name": "The Bitcoin Standard",
+    "description": "book by renowned author Dr. Saifedean Ammous",
+    "price": 100,
+    "stock": 1,
+    "imageUrl": "/uploads/1732623243264.jpg"
   }
 ]
