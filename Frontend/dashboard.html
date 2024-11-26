@@ -46,6 +46,8 @@
                             Cart
                             <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                         </button>
+                        <!-- Dynamic Buttons Here -->
+                <div id="dynamic-buttons"></div>
                     </form>
                 </div>
             </div>
@@ -306,31 +308,6 @@
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
-        <script>
-            // Obtener el token del localStorage
-            const token = localStorage.getItem('token');
-          
-            if (!token) {
-              alert("You are not logged in!");
-              window.location.href = "LogIn.html";  // Redirigir a login si no hay token
-            }
-          
-            // Realizar una solicitud a una ruta protegida
-            const response = await fetch('/protected-route', {
-              method: 'GET',
-              headers: {
-                'Authorization': `Bearer ${token}`  // Incluir el token en el encabezado
-              }
-            });
-          
-            if (response.ok) {
-              const data = await response.json();
-              console.log(data);
-            } else {
-              alert("You need to log in!");
-              window.location.href = "LogIn.html";  // Redirigir a login si el token es inválido
-            }
-          </script>          
+        <script type="module" src="js/scripts.js"></script>         
     </body>
 </html>

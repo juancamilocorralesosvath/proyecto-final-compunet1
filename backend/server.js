@@ -40,7 +40,7 @@ function isAuthenticated(req, res, next) {
 }
 
 // Route to serve the home page (HTML file)
-app.get('/', isAuthenticated, (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../Frontend/dashboard.html'));
 });
 
