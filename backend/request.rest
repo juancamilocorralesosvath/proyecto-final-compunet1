@@ -6,7 +6,7 @@ POST http://localhost:3000/users
 Content-Type: application/json
 
 {
-    "name": "john doe",
+    "name": "jane doe",
     "password": "password",
     "role": "admin"
 }
@@ -17,16 +17,10 @@ POST http://localhost:3000/users/login
 Content-Type: application/json
 
 {
-    "name": "john doe",
+    "name": "jane doe",
     "password": "password"
 }
 
 ### add a product
-POST http://localhost:3000/products
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Im5hbWUiOiJqb2huIGRvZSIsInBhc3N3b3JkIjoiJDJiJDEwJEJOS3VlM0Y3WlA1ZlZ2ai8vdW5XQXVsMndPYi9qWmF2YmdVQnUxTTRCaWozUnFQT0VWc3BxIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczMTU5MjYwMSwiZXhwIjoxNzMxNTk2MjAxfQ.T1w3JWf9_QOF68c5rAdXeqrZweNVXv63nOR-D4ayqjw
-
-{
-    "name": "product1",
-    "price": 100
-}
+GET http://localhost:3000/addProduct
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Im5hbWUiOiJqYW5lIGRvZSIsInBhc3N3b3JkIjoiJDJiJDEwJEFmdkJZWFdLaVg2Qy5CUGZkdDVjVWVMa25CakZqa0ViOTM1Z2J6azV2UHMyMm9ZOGREeS8yIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczMjU3OTMzNiwiZXhwIjoxNzMyNTgyOTM2fQ.4S--xs3eZFHQNyXgnyDUFneyXqgYDwX0HwEbo5bxpP0

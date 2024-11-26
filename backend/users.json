@@ -3,5 +3,10 @@
     "name": "john doe",
     "password": "$2b$10$vAICfIPyVB181cRkSTOGIeFOQe/mVT3OO8dlHvOjC5LNekLWp5ze6",
     "role": "admin"
+  },
+  {
+    "name": "jane doe",
+    "password": "$2b$10$AfvBYXWKiX6C.BPfdt5cUeLknBjFjkEb935gbzk5vPs22oY8dDy/2",
+    "role": "admin"
   }
 ]

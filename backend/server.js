@@ -139,28 +139,48 @@ app.post('/users/login', async (req, res) => {
 });
 
 // Endpoint to add a product - only accessible by admins 
-app.post('/products', checkToken, (req, res) => { 
-     //verify the JWT token generated for the user
-     jwt.verify(req.token, 'supersecret', (err, authorizedData) => {
-        if(err){
-            console.log('ERROR:: could not connect to the protected route')
-            res.sendStatus(403)
-        }else{
-            //If token is successfully verified, now we check if the user is an admin, if it is, it can add a new product
-            req.user = authorizedData.user
-            checkAdmin(req, res, () => {
-                const products = readProductsFromFile()
-                const product = {
-                    id: products.length + 1,
-                    name: req.body.name,
-                    price: req.body.price
-                }
-                products.push(product)
-                writeProductsToFile(products)
-                res.status(201).send('product successfuly added!')
-            })
+app.get('/addProduct', checkToken,(req, res) => {
+         //verify the JWT token generated for the user
+         jwt.verify(req.token, 'supersecret', (err, authorizedData) => {
+            if(err){
+                console.log('ERROR:: could not connect to the protected route')
+                res.sendStatus(403)
+            }else{
+                //If token is successfully verified, now we check if the user is an admin, if it is, it can add a new product
+                req.user = authorizedData.user
+                checkAdmin(req, res, () => {
+                    res.sendFile(path.join(__dirname, '../Frontend/addProduct.html'));
+                })
+            }
+         })
+    
+});
+
+app.post('/addProduct', (req, res) => { 
+
+ // Since we've already validated the user and ensured they're an admin on GET /addProduct,
+ // the only thing we need to check here is that the token is valid.
+    jwt.verify(req.token, 'supersecret', (err, authorizedData) => {
+        if (err) {
+            console.log('ERROR:: Could not verify token');
+            return res.sendStatus(403);
+        } else {
+            // Token is valid, now we add the product
+            const products = readProductsFromFile();
+            const product = {
+                id: products.length + 1,
+                name: req.body.name,
+                price: req.body.price,
+                description: req.body.desc,
+                availableQuantity: req.body.quant
+            };
+            products.push(product);
+            writeProductsToFile(products);
+
+            res.status(201).send('Product successfully added!');
         }
-     })
+    });
+      
 })
 
 // Endpoint to remove a product - only accessible by admins 
