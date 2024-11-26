@@ -1,0 +1,158 @@
+/* Reinicio básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+/* Fondo y cuerpo */
+body {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom, #1e293b, #0f172a); /* Fondo degradado oscuro */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    overflow-y: auto; /* Permite scroll si el contenido es extenso */
+}
+
+/* Títulos */
+h1, h2, h3 {
+    color: #e67e22; /* Naranja llamativo */
+    margin-bottom: 15px;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(230, 126, 34, 0.8);
+}
+
+h2 {
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+/* Sección de productos */
+#product-list {
+    width: 90%;
+    max-width: 1000px;
+    background: #1c1c1c; /* Fondo oscuro */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+    list-style-type: none;
+}
+
+#product-list li {
+    display: flex; /* Contenido alineado horizontalmente */
+    justify-content: space-between; /* Espaciado entre los elementos */
+    align-items: center; /* Centrado verticalmente */
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    border: 1px solid #444;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#product-list li:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#product-list li span {
+    font-size: 14px;
+    color: #ddd;
+    margin-right: 10px;
+}
+
+#product-list li button {
+    padding: 5px 10px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    background: #e74c3c; /* Botón rojo */
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#product-list li button:hover {
+    background: #c0392b;
+    transform: scale(1.05);
+}
+
+/* Formulario */
+form {
+    width: 90%;
+    max-width: 500px;
+    background: #1c1c1c; /* Fondo oscuro */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #ccc;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background: #282828;
+    color: #fff;
+    font-size: 14px;
+}
+
+/* Botón de enviar */
+form button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(45deg, #0ef, #32cd32); /* Degradado de azul a verde */
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+form button:hover {
+    background: linear-gradient(45deg, #32cd32, #0ef); /* Degradado invertido */
+    transform: scale(1.05); /* Crecimiento en hover */
+}
+
+/* Enlace */
+p a {
+    color: #3498db;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.2s ease;
+}
+
+p a:hover {
+    color: #1abc9c;
+    text-decoration: underline;
+}
+
+/* Scroll personalizado */
+#product-list::-webkit-scrollbar {
+    width: 10px;
+}
+
+#product-list::-webkit-scrollbar-thumb {
+    background: #3498db; /* Azul */
+    border-radius: 5px;
+}
+
+#product-list::-webkit-scrollbar-track {
+    background: #1c1c1c; /* Fondo oscuro */
+}

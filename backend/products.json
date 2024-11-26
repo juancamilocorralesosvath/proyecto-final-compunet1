@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "Camiseta mujer",
+    "description": "Camiseta de bitcoin",
+    "price": 50000,
+    "stock": 98,
+    "imageUrl": "/uploads/1732614759022.png"
+  },
+  {
+    "id": 2,
+    "name": "Fancy product",
+    "description": "Saco de bitcoins",
+    "price": 200000,
+    "stock": 50,
+    "imageUrl": "/uploads/1732615466934.png"
+  },
+  {
+    "id": 3,
+    "name": "Gorra Bitcoins",
+    "description": "Gorra para lucir",
+    "price": 20000,
+    "stock": 100,
+    "imageUrl": "/uploads/1732615502050.png"
+  },
+  {
+    "id": 4,
+    "name": "lapiz",
+    "description": "lapiz de bitcoin",
+    "price": 2000,
+    "stock": 1000,
+    "imageUrl": "/uploads/1732621816755.jpg"
+  },
+  {
+    "id": 5,
+    "name": "The Bitcoin Standard",
+    "description": "book by renowned author Dr. Saifedean Ammous",
+    "price": 100,
+    "stock": 1,
+    "imageUrl": "/uploads/1732623243264.jpg"
+  }
+]

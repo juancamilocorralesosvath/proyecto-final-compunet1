@@ -1,0 +1,106 @@
+/* Reinicio básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+/* Fondo del cuerpo */
+body {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom, #1e293b, #0f172a); /* Fondo degradado oscuro */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Título principal */
+h1 {
+    font-size: 42px;
+    color: #0ef; /* Azul brillante */
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(14, 239, 239, 0.8);
+}
+
+/* Resumen de compra */
+#purchase-summary {
+    width: 80%;
+    max-width: 600px;
+    background: #1c1c1c; /* Fondo oscuro */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+    color: #ccc;
+    font-size: 16px;
+    overflow-y: auto;
+    max-height: 300px; /* Para manejar contenido extenso */
+}
+
+/* Botón de confirmación */
+#confirm-purchase {
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(45deg, #32cd32, #0ef); /* Degradado verde-azul */
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(50, 205, 50, 0.3);
+}
+
+#confirm-purchase:hover {
+    background: linear-gradient(45deg, #0ef, #32cd32); /* Inversión del degradado */
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(50, 205, 50, 0.5);
+}
+
+/* Enlaces */
+p a {
+    text-decoration: none;
+    color: #0ef;
+    font-size: 16px;
+    margin: 10px;
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 4px;
+    background: rgba(14, 239, 239, 0.1); /* Fondo translúcido */
+    transition: background 0.3s, color 0.3s;
+}
+
+p a:hover {
+    background: rgba(14, 239, 239, 0.2);
+    color: #fff;
+}
+
+/* Efecto animado */
+body::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(14, 239, 239, 0.2), transparent 70%);
+    border-radius: 50%;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 6s infinite ease-in-out; /* Pulso suave */
+    pointer-events: none;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.2;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.5;
+    }
+}

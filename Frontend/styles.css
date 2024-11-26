@@ -1,0 +1,260 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background: #c2e0ff;
+}
+
+h1 {
+    font-family: Impact, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+    color: #424141;
+}
+
+h2 {
+    text-align: left;
+    margin-top: 50px;
+    color: #424141;
+}
+
+h3 {
+    text-align: center;
+    margin-top: 50px;
+    color: #424141;
+}
+
+h4 {
+    text-align: center;
+    margin-top: 20px;
+    color: #424141;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 35%;
+  }
+
+/* Layout */
+
+#product-list {
+    max-width: 850px;
+    margin: 25px auto;
+    padding: 10px;
+    background: #f0f7ff;
+    border-radius: 15px;
+}
+
+
+#purchase-summary, #purchase-history {
+    max-width: 850px;
+    margin: 20px auto;
+    padding: 10px;
+    background: #e2f2ff;
+    border-radius: 5px;
+}
+
+#cart-items {
+    max-width: 850px;
+    margin: 20px auto;
+    padding: 10px;
+    background: #bcdeff;
+    border-radius: 5px;
+}
+
+form {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #e2f0ff;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Elements */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    background: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+#confirm-purchase button {
+    background: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+p {
+    display: flex;
+    justify-content: center; 
+    gap: 20px;
+}
+
+/* Navigation Links (buttons) */
+p a {
+    font-size: 1rem;
+    padding: 10px 15px;
+    background: #5cb74e96;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none; 
+    display: inline-block; 
+}
+
+p a:hover {
+    background: #00ad26a8;
+}
+
+/* Specific Page Adjustments */
+#cart-items div,
+#product-list div {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f1f1f1;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+
+/* Product Container */
+#product-list div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #b4d9ff; 
+    border-radius: 10px; 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#product-list div:hover {
+    transform: translateY(-5px); /* Lift on hover */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Product Image */
+#product-list div img {
+    width: 120px; /* Smaller image */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+/* Product Details */
+#product-list div .product-details {
+    flex: 2;
+    margin: 0 20px;
+}
+
+#product-list div .product-details h2 {
+    margin: 0 0 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #444;
+}
+
+#product-list div .product-details p {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+/* Add to Cart Button */
+#product-list div button {
+    padding: 10px 15px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#product-list div button:hover {
+    background: #0056b3;
+    transform: scale(1.05); 
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #product-list div {
+        flex-direction: column; /* Stack content vertically */
+        align-items: flex-start;
+        padding: 15px;
+    }
+
+    #product-list div img {
+        width: 100%; /* Full width for smaller screens */
+        margin-bottom: 15px;
+    }
+
+    #product-list div .product-details {
+        margin: 0;
+    }
+
+    #product-list div button {
+        align-self: center; 
+        margin-top: 10px;
+    }
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        font-size: 0.9rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    p a {
+        font-size: 0.9rem;
+    }
+}

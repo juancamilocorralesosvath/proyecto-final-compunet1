@@ -1,0 +1,26 @@
+GET http://localhost:3000/users
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "name": "jane doe",
+    "password": "password",
+    "role": "admin"
+}
+
+###
+
+POST http://localhost:3000/users/login
+Content-Type: application/json
+
+{
+    "name": "jane doe",
+    "password": "password"
+}
+
+### add a product
+GET http://localhost:3000/addProduct
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Im5hbWUiOiJqYW5lIGRvZSIsInBhc3N3b3JkIjoiJDJiJDEwJEFmdkJZWFdLaVg2Qy5CUGZkdDVjVWVMa25CakZqa0ViOTM1Z2J6azV2UHMyMm9ZOGREeS8yIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczMjU3OTMzNiwiZXhwIjoxNzMyNTgyOTM2fQ.4S--xs3eZFHQNyXgnyDUFneyXqgYDwX0HwEbo5bxpP0

@@ -1,0 +1,128 @@
+/* Reinicio básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+}
+
+/* Fondo del cuerpo */
+body {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #1e2a36, #0f1419); /* Fondo degradado más suave */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    text-align: center; /* Centrado del contenido */
+    position: relative;
+}
+
+/* Título principal */
+h1 {
+    font-size: 42px;
+    color: #f2a900; /* Naranja Bitcoin */
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px rgba(242, 169, 0, 0.5); /* Efecto de brillo suave */
+    animation: fadeIn 2s ease-in-out; /* Aparición suave */
+}
+
+/* Subtítulo */
+h4 {
+    font-size: 18px;
+    color: #e0e0e0; /* Texto gris claro */
+    margin-bottom: 30px;
+    animation: slideIn 2s ease-out; /* Entrada desde abajo */
+}
+
+/* Imagen */
+img {
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    margin-bottom: 30px;
+    animation: bounce 3s infinite ease-in-out; /* Movimiento de rebote */
+    transition: transform 0.3s ease-in-out;
+}
+
+img:hover {
+    transform: scale(1.1); /* Aumenta ligeramente al pasar el ratón */
+}
+
+/* Enlaces */
+p a {
+    display: inline-block;
+    margin: 10px;
+    padding: 12px 25px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 30px;
+    background: linear-gradient(45deg, #0078d4, #28a745); /* Degradado azul-verde */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+p a:hover {
+    background: linear-gradient(45deg, #28a745, #0078d4); /* Inversión del degradado */
+    transform: translateY(-5px); /* Movimiento hacia arriba */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.7);
+}
+
+/* Decoración de movimiento en el fondo */
+body::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(242, 169, 0, 0.2), transparent 70%);
+    border-radius: 50%;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 5s infinite ease-in-out; /* Pulso suave */
+    pointer-events: none; /* No interfiere con el usuario */
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.2;
+    }
+    50% {
+        transform: scale(1.3);
+        opacity: 0.5;
+    }
+}

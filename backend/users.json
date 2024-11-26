@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "admin",
+    "email": "admin@myapp.com",
+    "password": "$2b$10$cscQn2KhqPuTu8Pzhp8UmONMYlUbiQyzDTCFB/FnW6FB8cXT/qv0a"
+  },
+  {
+    "id": 2,
+    "name": "Bob",
+    "email": "bob@gmail.com",
+    "password": "$2b$10$sZokITgAeCG/jnj9TP.ilOUIExIV55nEEmpbBAmn2nq6r.JIR5yam"
+  },
+  {
+    "id": 3,
+    "name": "Jennifer Castro",
+    "email": "jenncastro0601@gmail.com",
+    "password": "$2b$10$9idNS3uUzFJ0u6y0SR8N4ub6dUbz/pJfsPxDs7a3RQl0joX1AKHby"
+  },
+  {
+    "id": 4,
+    "name": "camilo",
+    "email": "camilo@gmail.com",
+    "password": "$2b$10$7GYiHJmxN3LzlgQbWQsUvOHc4PMHkWeHnuVzIba2sHQU/ZgdnGvK2"
+  },
+  {
+    "id": 5,
+    "name": "juan",
+    "email": "juan@gmail.com",
+    "password": "$2b$10$16DqXQmGz5.3ANFsgBWp7OZlkW3TxOz4FBb4q61Wo7kGISwGWrxvW"
+  }
+]

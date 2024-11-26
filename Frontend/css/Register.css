@@ -1,0 +1,101 @@
+/* Reinicio básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+/* Fondo del cuerpo */
+body {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom, #081b29, #121212); /* Fondo degradado oscuro */
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    flex-direction: column; /* Asegura alineación vertical */
+    overflow: hidden;
+    position: relative;
+}
+
+/* Título principal */
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #0ef;
+}
+
+/* Contenedor principal */
+form#register-form {
+    background: #1c1c1c; /* Fondo del formulario */
+    border-radius: 20px; /* Bordes redondeados */
+    padding: 30px;
+    width: 350px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7); /* Sombra */
+    text-align: center;
+    display: flex;
+    flex-direction: column; /* Alinea los elementos verticalmente */
+    gap: 15px; /* Espaciado uniforme entre elementos */
+}
+
+/* Etiquetas */
+form#register-form label {
+    text-align: left;
+    color: #ccc;
+    font-size: 14px;
+}
+
+/* Inputs */
+form#register-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background: #282828;
+    color: #fff;
+    font-size: 14px;
+}
+
+/* Placeholder */
+form#register-form input::placeholder {
+    color: #bbb;
+}
+
+/* Botón de enviar */
+form#register-form button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(45deg, #0ef, #32cd32); /* Degradado azul a verde */
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+form#register-form button:hover {
+    background: linear-gradient(45deg, #32cd32, #0ef); /* Degradado invertido */
+    transform: scale(1.05); /* Crece ligeramente al hover */
+}
+
+/* Enlaces */
+p a {
+    color: #0ef;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+/* Pie de página */
+p {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+}
