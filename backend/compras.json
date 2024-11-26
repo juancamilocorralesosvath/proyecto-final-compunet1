@@ -190,5 +190,45 @@
     ],
     "total": 400000,
     "date": "2024-11-26T12:17:28.241Z"
+  },
+  {
+    "userId": 6,
+    "id": 13,
+    "items": [
+      {
+        "itemId": "1",
+        "name": "Camiseta mujer",
+        "price": "50000",
+        "quantity": "3"
+      },
+      {
+        "itemId": "2",
+        "name": "Fancy product",
+        "price": "200000",
+        "quantity": "2"
+      },
+      {
+        "itemId": "5",
+        "name": "The Bitcoin Standard",
+        "price": "100",
+        "quantity": "1"
+      }
+    ],
+    "total": 550100,
+    "date": "2024-11-26T12:35:53.263Z"
+  },
+  {
+    "userId": 6,
+    "id": 14,
+    "items": [
+      {
+        "itemId": "6",
+        "name": "lapicero",
+        "price": "5",
+        "quantity": "5"
+      }
+    ],
+    "total": 25,
+    "date": "2024-11-26T12:38:37.992Z"
   }
 ]

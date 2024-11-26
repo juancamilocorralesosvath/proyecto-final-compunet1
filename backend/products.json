@@ -38,5 +38,13 @@
     "price": 100,
     "stock": 1,
     "imageUrl": "/uploads/1732623243264.jpg"
+  },
+  {
+    "id": 6,
+    "name": "lapicero",
+    "description": "lapicero negro",
+    "price": 5,
+    "stock": 100,
+    "imageUrl": "/uploads/1732624682247.jpg"
   }
 ]

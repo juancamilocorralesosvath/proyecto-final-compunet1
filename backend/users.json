@@ -28,5 +28,11 @@
     "name": "juan",
     "email": "juan@gmail.com",
     "password": "$2b$10$16DqXQmGz5.3ANFsgBWp7OZlkW3TxOz4FBb4q61Wo7kGISwGWrxvW"
+  },
+  {
+    "id": 6,
+    "name": "mateo",
+    "email": "mateo@gmail.com",
+    "password": "$2b$10$Uecwarq/SJ6pX0vjOvuJee6NIYv8W7caMAYBtmE179s2IwFjv2rGO"
   }
 ]
