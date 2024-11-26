@@ -42,7 +42,10 @@
               const messageElement = document.getElementById('message');
 
               if (response.status === 201) {
+                console.log('response text:')
+                  //console.log(response.text())
                   const token = await response.text(); // Get the token from the response
+                  console.log(token)
                   messageElement.textContent = 'Login successful!';
                   messageElement.style.color = 'green';
 

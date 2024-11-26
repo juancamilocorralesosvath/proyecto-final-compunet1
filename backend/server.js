@@ -11,6 +11,7 @@ const bcrypt = require('bcrypt')
 const fs = require('fs')
 const jwt = require('jsonwebtoken')
 const path = require('path');
+const cors = require('cors'); 
 
 
 const usersFilePath = './users.json'
@@ -24,6 +25,8 @@ app.use(express.json())
 
 // Serve static files (CSS, JS, images) from the 'Frontend' directory
 app.use(express.static(path.join(__dirname, '../Frontend')));
+// Habilitar CORS para todas las solicitudes (para desarrollo)
+app.use(cors());
 
 // Middleware para verificar si la sesión está iniciada
 function isAuthenticated(req, res, next) {
@@ -79,6 +82,7 @@ const checkAdmin = (req, res, next) => {
 //Check to make sure header is not undefined, if so, return Forbidden (403)
 const checkToken = (req, res, next) => {
     const header = req.headers['authorization'];
+    console.log(req.headers)
 
     if(typeof header !== 'undefined') {
         const bearer = header.split(' ');
@@ -88,7 +92,9 @@ const checkToken = (req, res, next) => {
         next();
     } else {
         //If header is undefined return Forbidden (403)
+        console.log('undefined token')
         res.sendStatus(403)
+
     }
 }
 
@@ -128,7 +134,9 @@ app.post('/users/register', async (req, res) => {
     }
 });
 
-
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, '../Frontend/LogIn.html'));
+});
 // Ruta de login de usuario
 app.post('/users/login', async (req, res) => {
     const users = readUsersFromFile()
@@ -156,47 +164,36 @@ app.post('/users/login', async (req, res) => {
 });
 
 // Endpoint to add a product - only accessible by admins 
-app.get('/addProduct', checkToken,(req, res) => {
-         //verify the JWT token generated for the user
-         jwt.verify(req.token, 'supersecret', (err, authorizedData) => {
-            if(err){
-                console.log('ERROR:: could not connect to the protected route')
-                res.sendStatus(403)
-            }else{
-                //If token is successfully verified, now we check if the user is an admin, if it is, it can add a new product
-                req.user = authorizedData.user
-                checkAdmin(req, res, () => {
-                    res.sendFile(path.join(__dirname, '../Frontend/addProduct.html'));
-                })
-            }
-         })
-    
+app.get('/addProduct', (req, res) => {
+    res.sendFile(path.join(__dirname, '../Frontend/addProduct.html'));
 });
 
-app.post('/addProduct', (req, res) => { 
+app.post('/addProduct', checkToken, (req, res) => { 
+             //verify the JWT token generated for the user
+             jwt.verify(req.token, 'supersecret', (err, authorizedData) => {
+                if(err){
+                    console.log('ERROR:: could not connect to the protected route')
+                    res.sendStatus(403)
+                }else{
+                    //If token is successfully verified, now we check if the user is an admin, if it is, it can add a new product
+                    req.user = authorizedData.user
+                    checkAdmin(req, res, () => {
+                                    // Token is valid, now we add the product
+                            const products = readProductsFromFile();
+                            const product = {
+                                id: products.length + 1,
+                            name: req.body.name,
+                            price: req.body.price,
+                        description: req.body.desc,
+                            availableQuantity: req.body.quant
+                            };
+                products.push(product);
+                writeProductsToFile(products);
 
- // Since we've already validated the user and ensured they're an admin on GET /addProduct,
- // the only thing we need to check here is that the token is valid.
-    jwt.verify(req.token, 'supersecret', (err, authorizedData) => {
-        if (err) {
-            console.log('ERROR:: Could not verify token');
-            return res.sendStatus(403);
-        } else {
-            // Token is valid, now we add the product
-            const products = readProductsFromFile();
-            const product = {
-                id: products.length + 1,
-                name: req.body.name,
-                price: req.body.price,
-                description: req.body.desc,
-                availableQuantity: req.body.quant
-            };
-            products.push(product);
-            writeProductsToFile(products);
-
-            res.status(201).send('Product successfully added!');
-        }
-    });
+                res.status(201).send('Product successfully added!');
+                    })
+                }
+             })
       
 })
 

@@ -8,10 +8,11 @@ document.getElementById('addProductForm').addEventListener('submit', async (even
     const quant = document.getElementById('quant').value;
 
     // tenemos que determinar como vamos a guardar el jwt
-    //const token = localStorage.getItem('jwtToken');  // Adjust this if you're storing the token elsewhere
+    const token = localStorage.getItem('authToken');  // Adjust this if you're storing the token elsewhere
 
+    console.log(token)
     // por el momento:
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Im5hbWUiOiJqYW5lIGRvZSIsInBhc3N3b3JkIjoiJDJiJDEwJEFmdkJZWFdLaVg2Qy5CUGZkdDVjVWVMa25CakZqa0ViOTM1Z2J6azV2UHMyMm9ZOGREeS8yIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczMjU3OTMzNiwiZXhwIjoxNzMyNTgyOTM2fQ.4S--xs3eZFHQNyXgnyDUFneyXqgYDwX0HwEbo5bxpP0'
+    //const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Im5hbWUiOiJqYW5lIGRvZSIsInBhc3N3b3JkIjoiJDJiJDEwJEFmdkJZWFdLaVg2Qy5CUGZkdDVjVWVMa25CakZqa0ViOTM1Z2J6azV2UHMyMm9ZOGREeS8yIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTczMjU3OTMzNiwiZXhwIjoxNzMyNTgyOTM2fQ.4S--xs3eZFHQNyXgnyDUFneyXqgYDwX0HwEbo5bxpP0'
     // Prepare the request body
     const productData = {
         name: name,
@@ -33,6 +34,8 @@ document.getElementById('addProductForm').addEventListener('submit', async (even
 
         // Handle the response
         const responseData = await response.text();
+        console.log('response data:')
+        console.log(responseData)
 
         if (response.ok) {
             document.getElementById('responseMessage').textContent = 'Product added successfully!';

@@ -3,5 +3,12 @@
     "id": 1,
     "name": "product1",
     "price": 100
+  },
+  {
+    "id": 2,
+    "name": "prod",
+    "price": "20",
+    "description": "first prod",
+    "availableQuantity": "20"
   }
 ]
