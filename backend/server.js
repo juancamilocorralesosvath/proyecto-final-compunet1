@@ -1,43 +1,148 @@
 
 // server.js file
-
 const express = require('express')
 const app = express()
-// para encriptar las contraseñas de los usuarios, de esa manera aunque
-// alguien logre acceder a nuestra base de datos, no va a poder ver las contraseñas
-// es una libreria asincrona
-const bcrypt = require('bcrypt')
-// para poder leer y escribir archivos JSON
+const bcrypt = require('bcrypt')// para poder leer y escribir archivos JSON
 const fs = require('fs')
 const jwt = require('jsonwebtoken')
 const path = require('path');
 const cors = require('cors'); 
+const multer = require('multer');
+const PORT = 3000;
 
 
-const usersFilePath = './users.json'
-const productsFilePath = './products.json'
-
-app.use(express.json())
-app.set('view engine', 'ejs')
-app.set('views', path.join(__dirname, '../Frontend'))
-
+const jwtSecret = 'supersecretkey';
+const saltRounds = 10;
 
 // Serve static files (CSS, JS, images) from the 'Frontend' directory
 app.use(express.static(path.join(__dirname, '../Frontend')));
 // Habilitar CORS para todas las solicitudes (para desarrollo)
 app.use(cors());
+app.use('/uploads', express.static('uploads'));
+app.use(express.json());
 
-// Middleware para verificar si la sesión está iniciada
-function isAuthenticated(req, res, next) {
-    if (req.session && req.session.name) {
-        // Si la sesión existe, continúa al siguiente middleware o ruta
-        return next();
-    } else {
-        // Si no hay sesión, redirige a LogIn.html
-        res.sendFile(path.join(__dirname, '../Frontend/LogIn.html'));
+
+const itemsFilePath = path.join(__dirname, 'products.json');
+const cartsFilePath = path.join(__dirname, 'carts.json');
+const comprasFilePath = path.join(__dirname, 'compras.json');
+const usersFilePath = path.join(__dirname, 'users.json');
+//
+
+
+// Configuración de almacenamiento para archivos subidos.
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/');  
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname)); 
     }
-}
+});
 
+
+/** Instancia de Multer con configuración de almacenamiento */
+const upload = multer({ storage: storage });
+
+
+/**
+ * Middleware para autenticar JWT.
+ * Verifica token en el encabezado `Authorization` y permite acceso si es válido.
+ */
+const authenticateJWT = (req, res, next) => {
+    const token = req.header('Authorization')?.split(' ')[1];
+
+    if (!token) {
+        return res.status(401).json({ message: 'Acceso no autorizado' });
+    }
+
+    jwt.verify(token, jwtSecret, (err, user) => {
+        if (err) {
+            return res.status(403).json({ message: 'Token inválido o expirado' });
+        }
+
+        req.user = user;
+        next();
+    });
+};
+
+
+
+/**
+ * Lee datos desde un archivo JSON.
+ */
+const readDataFromFile = (filePath) => {
+    const data = fs.readFileSync(filePath);
+    return JSON.parse(data);
+};
+
+/**
+ * Escribe datos en un archivo JSON.
+ */
+const writeDataToFile = (filePath, data) => {
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+};
+
+let items = readDataFromFile(itemsFilePath);
+let carts = readDataFromFile(cartsFilePath);
+let compras = readDataFromFile(comprasFilePath);
+let users = readDataFromFile(usersFilePath);
+ 
+//Gestion de los productos------------------------------
+
+app.get('/api/items', (req, res) => {
+    res.json(items);
+});
+
+// Endpoint to add a product - only accessible by admins 
+app.post('/api/items', authenticateJWT, upload.single('image'), (req, res) => {
+    const { name, description, price, stock } = req.body;
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : '';
+
+    if (req.user.email !== 'admin@myapp.com') {
+        return res.status(403).json({ message: 'No puedes agregar productos' });
+    }
+
+    const priceNum = parseFloat(price);
+    const stockNum = parseInt(stock, 10);
+
+    const newItem = {
+        id: items.length > 0 ? items[items.length - 1].id + 1 : 1,
+        name,
+        description,
+        price: priceNum,
+        stock: stockNum,
+        imageUrl 
+    };
+
+    items.push(newItem);
+    writeDataToFile(itemsFilePath, items);
+    res.status(201).json({ message: 'Producto agregado exitosamente', item: newItem });
+});
+
+
+
+// Endpoint to remove a product - only accessible by admins 
+app.delete('/api/items/:id', authenticateJWT, (req, res) => {
+    const { id } = req.params;
+    const itemId = parseInt(id, 10);
+
+    if (req.user.email !== 'admin@myapp.com') {
+        return res.status(403).json({ message: 'Acceso restringido. Solo los administradores pueden eliminar productos.' });
+    }
+
+    const itemIndex = items.findIndex(item => item.id === itemId);
+
+    if (itemIndex !== -1) {
+        items.splice(itemIndex, 1);
+        writeDataToFile(itemsFilePath, items);
+        res.status(200).json({ message: 'Item eliminado exitosamente' });
+    } else {
+        res.status(404).json({ message: 'Item no encontrado' });
+    }
+});
+
+// Endpoint to view products - accessible by all users 
 app.get('/', (req, res) => {
     // Read the products data
     fs.readFile(path.join(__dirname, 'products.json'), 'utf8', (err, data) => {
@@ -50,6 +155,10 @@ app.get('/', (req, res) => {
     });
 });
 
+
+
+
+ //---------------------Gestión de usuarios---------------
 const readUsersFromFile = () => {
     if(!fs.existsSync(usersFilePath)) {
         return []
@@ -63,174 +172,205 @@ const writeUsersToFile = (users) => {
 }
 
 const readProductsFromFile = () => { 
-    if (!fs.existsSync(productsFilePath)) { 
+    if (!fs.existsSync(itemsFilePath)) { 
         return [] 
     } 
-    const productsData = fs.readFileSync(productsFilePath) 
+    const productsData = fs.readFileSync(itemsFilePath) 
 
     return JSON.parse(productsData) 
 }
 
-const writeProductsToFile = (products) => { 
-    fs.writeFileSync(productsFilePath, JSON.stringify(products, null, 2)) 
-}
 
-// Middleware to check user roles 
-const checkAdmin = (req, res, next) => { 
-    const users = readUsersFromFile() 
-    const user = users.find(user => user.name === req.user.name) 
-    if (!user || user.role !== 'admin') { 
-        return res.status(403).send('Access denied') 
-    } 
-    next() 
-}
 
-//Check to make sure header is not undefined, if so, return Forbidden (403)
-const checkToken = (req, res, next) => {
-    const header = req.headers['authorization'];
-    console.log(req.headers)
+/**
+ * Registra un nuevo usuario.
+ * Permite que un usuario se registre proporcionando su nombre, correo y contraseña.
+ */
+app.post('/api/users', async (req, res) => {
+    const { name, email, password } = req.body;
 
-    if(typeof header !== 'undefined') {
-        const bearer = header.split(' ');
-        const token = bearer[1];
+    const existingUser = users.find(user => user.email === email);
+    if (existingUser) {
+        return res.status(400).json({ message: 'El correo ya está registrado' });
+    }
 
-        req.token = token;
-        next();
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    const newUser = {
+        id: users.length > 0 ? users[users.length - 1].id + 1 : 1,
+        name,
+        email,
+        password: hashedPassword,
+    };
+
+    const newCart = {
+        userId: newUser.id,
+        items: []
+    };
+
+    carts.push(newCart);
+    users.push(newUser);
+
+    writeDataToFile(cartsFilePath, carts);
+    writeDataToFile(usersFilePath, users);
+   
+
+    res.status(201).json({ message: 'Usuario registrado exitosamente', user: newUser });
+});
+
+/**
+ * Inicia sesión de un usuario.
+ * Verifica las credenciales del usuario y, si son correctas, genera un token JWT para acceso posterior.
+ */
+app.post('/api/login', async (req, res) => {
+    const { email, password } = req.body;
+    const user = users.find(user => user.email === email);
+    if (!user) {
+        return res.status(404).json({ message: 'Usuario no encontrado' });
+    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+        return res.status(401).json({ message: 'Contraseña incorrecta' });
+    }
+    const token = jwt.sign({ id: user.id, email: user.email }, jwtSecret, { expiresIn: '1h' });
+    res.json({ message: 'Login exitoso', token });
+});
+
+/**
+ * Acceso al dashboard de administrador.
+ * Verifica que el usuario esté autenticado y sea el administrador antes de permitir el acceso.
+ */
+app.get('/api/admin/dashboard', authenticateJWT, (req, res) => {
+    if (req.user.email !== 'admin@myapp.com') {
+        return res.status(403).json({ message: 'Acceso solo para el administrador' });
+    }
+    res.json({ message: 'Bienvenido al dashboard de administrador' });
+});
+
+//-----------Carrito de compras
+
+//Agregar item al carrito
+app.post('/api/carts/:userId', authenticateJWT, (req, res) => {
+    const { userId } = req.params;
+    const { itemId, name, price, quantity } = req.body;
+    const cart = carts.find(cart => cart.userId === parseInt(userId, 10));
+
+    if (cart) {
+        const existingItem = cart.items.find(item => item.itemId === itemId);
+        if (existingItem) {
+            existingItem.quantity += quantity;
+        } else {
+            cart.items.push({ itemId, name, price, quantity });
+        }
+
+        writeDataToFile(cartsFilePath, carts);
+        res.json({ message: 'Item agregado al carrito', cart });
     } else {
-        //If header is undefined return Forbidden (403)
-        console.log('undefined token')
-        res.sendStatus(403)
-
+        res.status(404).json({ message: 'Carrito no encontrado' });
     }
+});
+
+//eliminar producto del carrito 
+app.delete('/api/carts/:userId/items/:itemId', authenticateJWT, (req, res) => {
+    const { userId, itemId } = req.params;
+    const cart = carts.find(cart => cart.userId === parseInt(userId, 10));
+
+    if (cart) {
+        const itemIndex = cart.items.find(item => item.itemId === parseInt(itemId, 10));
+        if (itemIndex !== -1) {
+            cart.items.splice(itemIndex, 1);
+            writeDataToFile(cartsFilePath, carts);
+            res.json({ message: 'Item eliminado del carrito', cart });
+        } else {
+            res.status(404).json({ message: 'Item no encontrado en el carrito' });
+        }
+    } else {
+        res.status(404).json({ message: 'Carrito no encontrado' });
+    }
+});
+
+//obtener un carrito 
+app.get('/api/carts/:userId', authenticateJWT, (req, res) => {
+    const { userId } = req.params;
+    const cart = carts.find(cart => cart.userId === parseInt(userId, 10));
+
+    if (cart) {
+        res.json(cart);
+    } else {
+        res.status(404).json({ message: 'Carrito no encontrado' });
+    }
+});
+
+// Compras
+
+app.post('/api/orders', authenticateJWT, (req, res) => {
+    const userId = req.user.id; 
+    const cart = carts.find(cart => cart.userId === parseInt(userId, 10));
+
+    if (!cart || cart.items.length === 0) {
+        return res.status(400).json({ message: 'El carrito está vacío o no existe.' });
+    }
+
+  
+    const total = cart.items.reduce((sum, item) => {
+        const product = getProductById(item.itemId);
+        if (!product) {
+            return res.status(404).json({ message: `Producto con ID ${item.itemId} no encontrado.` });
+        }
+
+        if (product.stock < item.quantity) {
+            return res.status(400).json({ message: `No hay suficiente stock para el producto ${product.name}.` });
+        }
+
+        return sum + (product.price * item.quantity);
+    }, 0);
+
+    
+    cart.items.forEach(item => {
+        const product = getProductById(item.itemId);
+        product.stock -= item.quantity;
+    });
+
+    
+    const newOrder = {
+        userId,
+        id: compras.length > 0 ? compras[compras.length - 1].id + 1 : 1,
+        items: cart.items,
+        total,
+        date: new Date(),
+    };    
+
+    
+    compras.push(newOrder);
+    writeDataToFile(comprasFilePath, compras); 
+
+    cart.items = [];
+    writeDataToFile(cartsFilePath, carts); 
+
+    res.status(201).json({ message: 'Compra realizada con éxito!', order: newOrder });
+});
+
+// Obtiene todas las órdenes de un usuario específico.
+
+app.get('/api/orders/:userId', authenticateJWT, (req, res) => {
+
+    const { userId } = req.params;
+    const data = compras.filter(compra => compra.userId === parseInt(userId, 10));
+
+    if (data) {
+        res.json(data);
+    } else {
+        res.status(404).json({ message: 'No se encontraron órdenes para este usuario.' });
+    }
+});
+
+/**
+ * Funcion auxiliar para retornar un producto dado su id.
+ */
+function getProductById(itemId) {
+    return items.find(product => product.id === parseInt(itemId, 10));
 }
 
-// Ruta para obtener todos los usuarios
-app.get('/users', (req, res) => {
-    const users = readUsersFromFile()
-    res.json(users)
-})
-
-app.post('/users/register', async (req, res) => {
-    try {
-        const users = await readUsersFromFile(); // Await added
-        const user = users.find(user => user.name === req.body.name); // Properly declare 'user'
-
-        if (user != null) { 
-            return res.status(400).send('User already exists'); 
-        }
-
-        const salt = await bcrypt.genSalt(); // Salt generation
-        const hashedPassword = await bcrypt.hash(req.body.password, salt); // Hash password
-
-        console.log("salt:" + salt);
-        console.log("hash:" + hashedPassword);
-
-        const newUser = { // Renamed to avoid overwriting the 'user' variable
-            name: req.body.name,
-            password: hashedPassword,
-            role: req.body.role
-        };
-
-        users.push(newUser);
-        await writeUsersToFile(users); // Await added
-        res.status(201).send('User created successfully');
-    } catch (error) {
-        console.error('Error during user registration:', error); // Log the error
-        res.status(500).send('Internal server error');
-    }
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
-
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, '../Frontend/LogIn.html'));
-});
-// Ruta de login de usuario
-app.post('/users/login', async (req, res) => {
-    const users = readUsersFromFile()
-    const user = users.find(user => user.name === req.body.name)
-    if (user == null){
-        return res.status(400).send('user does not exists')
-    }
-
-    try {
-        // usamos bcrypt para comparar
-        if (await bcrypt.compare(req.body.password, user.password)){
-            //if user log in success, generate a JWT token for the user with a secret key}
-            jwt.sign({user}, 'supersecret', {expiresIn: '1h'}, (err, token)=> {
-                if(err){
-                    console.log(err)
-                }
-                res.status(201).send(token)
-            })
-        } else{
-            res.send('wrong username or password...')
-        }
-    } catch (error) {
-        res.status(500).send('Error during login');
-    }
-});
-
-// Endpoint to add a product - only accessible by admins 
-app.get('/addProduct', (req, res) => {
-    res.sendFile(path.join(__dirname, '../Frontend/addProduct.html'));
-});
-
-app.post('/addProduct', checkToken, (req, res) => { 
-             //verify the JWT token generated for the user
-             jwt.verify(req.token, 'supersecret', (err, authorizedData) => {
-                if(err){
-                    console.log('ERROR:: could not connect to the protected route')
-                    res.sendStatus(403)
-                }else{
-                    //If token is successfully verified, now we check if the user is an admin, if it is, it can add a new product
-                    req.user = authorizedData.user
-                    checkAdmin(req, res, () => {
-                                    // Token is valid, now we add the product
-                            const products = readProductsFromFile();
-                            const product = {
-                                id: products.length + 1,
-                            name: req.body.name,
-                            price: req.body.price,
-                        description: req.body.desc,
-                            availableQuantity: req.body.quant
-                            };
-                products.push(product);
-                writeProductsToFile(products);
-
-                res.status(201).send('Product successfully added!');
-                    })
-                }
-             })
-      
-})
-
-// Endpoint to remove a product - only accessible by admins 
-app.delete('/products/:id', checkToken, (req, res) => { 
-    jwt.verify(req.token, 'supersecret', (err, authorizedData) => { 
-        if (err) { 
-            console.log('ERROR:: could not connect to the protected route') 
-            res.sendStatus(403) } 
-        else { 
-            // If token is successfully verified, now we check if the user is an admin 
-            req.user = authorizedData.user 
-            checkAdmin(req, res, () => { 
-                const products = readProductsFromFile() 
-                const productIndex = products.findIndex(p => p.id === parseInt(req.params.id)) 
-                if (productIndex === -1) { 
-                    return res.status(404).send('Product not found') 
-                } 
-                products.splice(productIndex, 1) 
-                writeProductsToFile(products) 
-                res.send('Product removed') }) 
-            } 
-        }) 
-    })
-
-// Endpoint to view products - accessible by all users 
-app.get('/products', (req, res) => { 
-    const products = readProductsFromFile() 
-    res.json(products) 
-})
-
-
-
-app.listen(3000)

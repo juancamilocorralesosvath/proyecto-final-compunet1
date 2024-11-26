@@ -1,0 +1,112 @@
+[
+  {
+    "userId": 2,
+    "id": 1,
+    "items": [
+      {
+        "itemId": "1",
+        "name": "Carneeeee",
+        "price": "60000",
+        "quantity": "1"
+      }
+    ],
+    "total": 60000,
+    "date": "2024-11-20T14:46:45.081Z"
+  },
+  {
+    "userId": 2,
+    "id": 2,
+    "items": [
+      {
+        "itemId": "3",
+        "name": "aaaa",
+        "price": "13431",
+        "quantity": "1"
+      }
+    ],
+    "total": 13431,
+    "date": "2024-11-20T19:04:40.756Z"
+  },
+  {
+    "userId": 3,
+    "id": 3,
+    "items": [
+      {
+        "itemId": "1",
+        "name": "product1",
+        "price": "100",
+        "quantity": "1"
+      }
+    ],
+    "total": 100,
+    "date": "2024-11-26T09:43:34.294Z"
+  },
+  {
+    "userId": 3,
+    "id": 4,
+    "items": [
+      {
+        "itemId": "2",
+        "name": "prod",
+        "price": "20",
+        "quantity": "1"
+      }
+    ],
+    "total": 20,
+    "date": "2024-11-26T09:44:26.489Z"
+  },
+  {
+    "userId": 3,
+    "id": 5,
+    "items": [
+      {
+        "itemId": "1",
+        "name": "Camiseta mujer",
+        "price": "50000",
+        "quantity": "1"
+      }
+    ],
+    "total": 50000,
+    "date": "2024-11-26T09:53:10.583Z"
+  },
+  {
+    "userId": 3,
+    "id": 6,
+    "items": [
+      {
+        "itemId": "1",
+        "name": "Camiseta mujer",
+        "price": "50000",
+        "quantity": "1"
+      }
+    ],
+    "total": 50000,
+    "date": "2024-11-26T11:21:19.830Z"
+  },
+  {
+    "userId": 3,
+    "id": 7,
+    "items": [
+      {
+        "itemId": "2",
+        "name": "Fancy product",
+        "price": "200000",
+        "quantity": "13"
+      },
+      {
+        "itemId": "1",
+        "name": "Camiseta mujer",
+        "price": "50000",
+        "quantity": "1"
+      },
+      {
+        "itemId": "3",
+        "name": "Gorra Bitcoins",
+        "price": "20000",
+        "quantity": "1"
+      }
+    ],
+    "total": 2670000,
+    "date": "2024-11-26T11:51:49.594Z"
+  }
+]

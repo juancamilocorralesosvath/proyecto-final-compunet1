@@ -1,0 +1,114 @@
+/* Reinicio básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+/* Fondo del cuerpo */
+body {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom, #1e293b, #0f172a); /* Fondo degradado oscuro */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px 10px;
+    text-align: center;
+}
+
+/* Título principal */
+h1 {
+    font-size: 42px;
+    color: #f39c12; /* Amarillo oscuro para resaltar */
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(243, 156, 18, 0.8);
+}
+
+/* Contenedor del carrito */
+#cart-items {
+    width: 90%;
+    max-width: 800px;
+    background: #1c1c1c; /* Fondo oscuro */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+    color: #ccc;
+    font-size: 16px;
+    overflow-y: auto;
+    max-height: 400px; /* Para manejar contenido extenso */
+    text-align: left;
+}
+
+/* Estilo de los enlaces */
+p a {
+    display: inline-block;
+    margin: 10px;
+    padding: 12px 25px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 30px;
+    background: linear-gradient(45deg, #3498db, #2ecc71); /* Degradado azul-verde */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+p a:hover {
+    background: linear-gradient(45deg, #2ecc71, #3498db); /* Inversión del degradado */
+    transform: translateY(-5px); /* Movimiento hacia arriba */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.7);
+}
+
+/* Botón de confirmar compra */
+p a:first-of-type {
+    background: linear-gradient(45deg, #f39c12, #d35400); /* Degradado naranja */
+}
+
+p a:first-of-type:hover {
+    background: linear-gradient(45deg, #d35400, #f39c12);
+}
+
+/* Scroll personalizado para el carrito */
+#cart-items::-webkit-scrollbar {
+    width: 10px;
+}
+
+#cart-items::-webkit-scrollbar-thumb {
+    background: #3498db; /* Azul para la barra */
+    border-radius: 5px;
+}
+
+#cart-items::-webkit-scrollbar-track {
+    background: #1c1c1c; /* Fondo oscuro */
+}
+
+/* Gestos visuales */
+body::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(50, 152, 219, 0.2), transparent 70%);
+    border-radius: 50%;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 6s infinite ease-in-out; /* Pulso suave */
+    pointer-events: none;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.2;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.5;
+    }
+}

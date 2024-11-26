@@ -1,25 +1,26 @@
 [
   {
-    "name": "john doe",
-    "password": "$2b$10$vAICfIPyVB181cRkSTOGIeFOQe/mVT3OO8dlHvOjC5LNekLWp5ze6",
-    "role": "admin"
+    "id": 1,
+    "name": "admin",
+    "email": "admin@myapp.com",
+    "password": "$2b$10$cscQn2KhqPuTu8Pzhp8UmONMYlUbiQyzDTCFB/FnW6FB8cXT/qv0a"
   },
   {
-    "name": "juan",
-    "password": "$2b$10$Q9VuIulV1RQgCpLJ7710wO.u8N1NoHm4ItvAWS.Vqb7B3uvQXiKi2"
+    "id": 2,
+    "name": "Bob",
+    "email": "bob@gmail.com",
+    "password": "$2b$10$sZokITgAeCG/jnj9TP.ilOUIExIV55nEEmpbBAmn2nq6r.JIR5yam"
   },
   {
-    "name": "juan2",
-    "password": "$2b$10$8iB9sYmdzno8tHDVDDFnA.hCoJDPbRTbQ4HMknOjVoL.K5z8Je.um"
+    "id": 3,
+    "name": "Jennifer Castro",
+    "email": "jenncastro0601@gmail.com",
+    "password": "$2b$10$9idNS3uUzFJ0u6y0SR8N4ub6dUbz/pJfsPxDs7a3RQl0joX1AKHby"
   },
   {
-    "name": "juan3",
-    "password": "$2b$10$5ns8jz4ZUoGehdIi5Q1vkOavotMKVPvEjc3nxvphxCqyNnaF2Swj6",
-    "role": "admin"
-  },
-  {
-    "name": "jane doe",
-    "password": "$2b$10$AfvBYXWKiX6C.BPfdt5cUeLknBjFjkEb935gbzk5vPs22oY8dDy/2",
-    "role": "admin"
+    "id": 4,
+    "name": "camilo",
+    "email": "camilo@gmail.com",
+    "password": "$2b$10$7GYiHJmxN3LzlgQbWQsUvOHc4PMHkWeHnuVzIba2sHQU/ZgdnGvK2"
   }
 ]

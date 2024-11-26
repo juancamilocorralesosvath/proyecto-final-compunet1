@@ -1,81 +1,172 @@
-body, html {
+/* Reinicio básico */
+* {
     margin: 0;
     padding: 0;
-    height: 100%;
+    box-sizing: border-box;
     font-family: Arial, sans-serif;
+    color: #fff;
 }
-.container {
+
+/* Fondo del cuerpo */
+body {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom, #081b29, #121212); /* Fondo degradado oscuro */
     display: flex;
-    height: 100%;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Oculta cualquier elemento fuera del viewport */
+    position: relative; /* Para que los anillos se posicionen correctamente */
 }
-.left {
-    background-color: #2c2c2c;
-    color: white;
-    width: 50%;
+
+/* Título principal */
+h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #0ef;
+    z-index: 10; /* Por encima de los anillos */
+    position: absolute;
+    top: 10%;
+}
+
+/* Contenedor principal */
+.wrapper {
+    position: relative;
+    width: 350px; /* Ajustado para que quede dentro del anillo */
+    height: 450px;
+    background: #1c1c1c; /* Fondo del formulario */
+    border-radius: 20px; /* Bordes ligeramente redondeados */
+    padding: 30px;
+    text-align: center;
+    z-index: 10; /* Encima de los anillos */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Formulario */
+#login-form {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
 }
-.left .logo {
-    display: flex;
-    align-items: center;
-    margin-bottom: 50px;
+
+/* Imagen de usuario */
+#login-form img {
+    display: block;
+    margin: 0 auto 20px;
+    border-radius: 50%; /* Hace la imagen redonda */
+    width: 80px;
+    height: 80px;
 }
-.left .logo i {
-    font-size: 2em;
-    color: #6ab4ba;
-    margin-right: 10px;
+
+/* Etiquetas */
+#login-form label {
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+    color: #ccc;
+    font-size: 14px;
 }
-.left .logo h1 {
-    font-size: 2em;
-    margin: 0;
-}
-.left h1 {
-    font-size: 2em;
-    margin-bottom: 20px;
-}
-.left form {
-    width: fit-content; 
-    max-width: 300px;
-}
-.left form input {
+
+/* Inputs */
+#login-form input {
     width: 100%;
     padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #444;
+    margin-bottom: 15px;
+    border: 1px solid #555;
     border-radius: 5px;
-    background-color: #333;
-    color: white;
-    box-sizing: border-box;
+    background: #282828;
+    color: #fff;
+    font-size: 14px;
 }
-.left form button {
+
+/* Placeholder */
+#login-form input::placeholder {
+    color: #bbb;
+}
+
+/* Botón de enviar */
+#login-form button {
     width: 100%;
     padding: 10px;
-    margin: 10px 0;
+    font-size: 16px;
     border: none;
     border-radius: 5px;
-    background-color: #4ab3f4;
-    color: white;
-    font-size: 1em;
+    background: linear-gradient(45deg, #0ef, #32cd32); /* Degradado de azul a verde */
+    color: #fff;
     cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
 }
-.left form a {
-    color: #4ab3f4;
+
+#login-form button:hover {
+    background: linear-gradient(45deg, #32cd32, #0ef); /* Degradado invertido */
+    transform: scale(1.05); /* Crecimiento en hover */
+}
+
+/* Enlaces */
+p a {
+    color: #0ef;
     text-decoration: none;
-    font-size: 0.9em;
+    font-size: 14px;
 }
-.left .register {
-    margin-top: 20px;
-    font-size: 0.9em;
+
+p a:hover {
+    text-decoration: underline;
 }
-.left .register a {
-    color: #4ab3f4;
-    text-decoration: none;
+
+/* Anillos giratorios */
+.ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 4px solid transparent;
+    animation: rotate 6s linear infinite;
+    z-index: 1; /* Detrás del formulario */
 }
-.right {
-    width: 50%;
-    background: url('https://images.unsplash.com/photo-1641802914005-2a9b0f3165b0?q=80&w=1886&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center;
-    background-size: cover;
+
+/* Anillo 1 */
+.ring:nth-child(1) {
+    border-top: 4px solid #0ef; /* Azul */
+    width: 420px;
+    height: 420px;
+    animation: rotate 4s linear infinite;
+}
+
+/* Anillo 2 */
+.ring:nth-child(2) {
+    border-top: 4px solid #32cd32; /* Verde */
+    width: 470px;
+    height: 470px;
+    animation: rotate-reverse 6s linear infinite; /* Rotación inversa */
+}
+
+/* Anillo 3 */
+.ring:nth-child(3) {
+    border-top: 4px solid rgba(255, 255, 255, 0.5); /* Blanco translúcido */
+    width: 600px;
+    height: 600px;
+    animation: rotate 8s linear infinite;
+}
+
+/* Animaciones de rotación */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotate-reverse {
+    from {
+        transform: rotate(360deg);
+    }
+    to {
+        transform: rotate(0deg);
+    }
 }
