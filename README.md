@@ -21,12 +21,18 @@ cd backend
 ```bash
 npm run install
 ```
-to install the required dependencies  
+to install the required dependencies
 
-4. head to the url in localhost, port 3000: http://localhost:3000
+4. to run the project, run:
+
+```bash
+npm run devStart
+```
+
+5. head to the url in localhost, port 3000: http://localhost:3000
 
 keep in mind:  
 
-5. there is only one admin user: 
+6. there is only one admin user: 
 * email: admin@myapp.com
 * password: admin
