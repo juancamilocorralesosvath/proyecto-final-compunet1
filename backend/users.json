@@ -3,5 +3,18 @@
     "name": "john doe",
     "password": "$2b$10$vAICfIPyVB181cRkSTOGIeFOQe/mVT3OO8dlHvOjC5LNekLWp5ze6",
     "role": "admin"
+  },
+  {
+    "name": "juan",
+    "password": "$2b$10$Q9VuIulV1RQgCpLJ7710wO.u8N1NoHm4ItvAWS.Vqb7B3uvQXiKi2"
+  },
+  {
+    "name": "juan2",
+    "password": "$2b$10$8iB9sYmdzno8tHDVDDFnA.hCoJDPbRTbQ4HMknOjVoL.K5z8Je.um"
+  },
+  {
+    "name": "juan3",
+    "password": "$2b$10$5ns8jz4ZUoGehdIi5Q1vkOavotMKVPvEjc3nxvphxCqyNnaF2Swj6",
+    "role": "admin"
   }
 ]

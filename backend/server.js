@@ -25,8 +25,19 @@ app.use(express.json())
 // Serve static files (CSS, JS, images) from the 'Frontend' directory
 app.use(express.static(path.join(__dirname, '../Frontend')));
 
+// Middleware para verificar si la sesión está iniciada
+function isAuthenticated(req, res, next) {
+    if (req.session && req.session.name) {
+        // Si la sesión existe, continúa al siguiente middleware o ruta
+        return next();
+    } else {
+        // Si no hay sesión, redirige a LogIn.html
+        res.sendFile(path.join(__dirname, '../Frontend/LogIn.html'));
+    }
+}
+
 // Route to serve the home page (HTML file)
-app.get('/', (req, res) => {
+app.get('/', isAuthenticated, (req, res) => {
     res.sendFile(path.join(__dirname, '../Frontend/dashboard.html'));
 });
 
@@ -87,29 +98,36 @@ app.get('/users', (req, res) => {
     res.json(users)
 })
 
-app.post('/users', async (req, res) => {
-    try{
-        const users = readUsersFromFile()
-        // entre mas grande el numero del salt mas tiempo va a tomar, pero es mas seguro
-        const salt = await bcrypt.genSalt()
-        // para hacer el hash, toma la contra del user y el salt que generamos
-        const hashedPassword = await bcrypt.hash(req.body.password, salt)
-        console.log("salt:"+salt)
-        console.log("hash:"+hashedPassword)
+app.post('/users/register', async (req, res) => {
+    try {
+        const users = await readUsersFromFile(); // Await added
+        const user = users.find(user => user.name === req.body.name); // Properly declare 'user'
 
-        const user = {
+        if (user != null) { 
+            return res.status(400).send('User already exists'); 
+        }
+
+        const salt = await bcrypt.genSalt(); // Salt generation
+        const hashedPassword = await bcrypt.hash(req.body.password, salt); // Hash password
+
+        console.log("salt:" + salt);
+        console.log("hash:" + hashedPassword);
+
+        const newUser = { // Renamed to avoid overwriting the 'user' variable
             name: req.body.name,
-            // bcrypt se encarga de guardar el salt dentro del hash
             password: hashedPassword,
             role: req.body.role
-        }
-        users.push(user)
-        writeUsersToFile(users)
-        res.status(201).send()
-    }catch{
-        res.status(500).send()
+        };
+
+        users.push(newUser);
+        await writeUsersToFile(users); // Await added
+        res.status(201).send('User created successfully');
+    } catch (error) {
+        console.error('Error during user registration:', error); // Log the error
+        res.status(500).send('Internal server error');
     }
 });
+
 
 // Ruta de login de usuario
 app.post('/users/login', async (req, res) => {
@@ -127,9 +145,8 @@ app.post('/users/login', async (req, res) => {
                 if(err){
                     console.log(err)
                 }
-                res.send(token)
+                res.status(201).send(token)
             })
-            //res.send('success!!!')
         } else{
             res.send('wrong username or password...')
         }
